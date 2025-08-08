@@ -1,0 +1,22 @@
+{
+  "name": "copix",
+  "version": "1.0.0",
+  "description": "截屏、管理clipbord图片文件、文本",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liuxsen/Copix.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liuxsen/Copix/issues"
+  },
+  "homepage": "https://github.com/liuxsen/Copix#readme",
+  "devDependencies": {
+    "electron": "^37.2.6"
+  }
+}

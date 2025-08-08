@@ -4,11 +4,12 @@ import path from 'path'
 import { isDev } from './constantUtil'
 
 export const getPreloadPath = () => {
-  console.log( app.getAppPath());
+  // app.getAppPath(): /Users/liujianhui01/liuxsen/interview/Copix
   return path.join(
     app.getAppPath(), 
     isDev() ? '.' : '..',
     'dist-electron',
-    'preload.js'
+    'preload',
+    'index.js'
   )
 }

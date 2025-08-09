@@ -4,7 +4,7 @@
   "description": "截屏、管理clipbord图片文件、文本",
   "main": "dist-electron/main/main.js",
   "scripts": {
-    "dev": "npm-run-all --parallel dev:renderer watch:main dev:main",
+    "dev": "npm-run-all --parallel dev:renderer watch:main",
     "dev:renderer": "vite",
     "dev:main": "npm run build:main; cross-env NODE_ENV=development electron --inspect=9229 .",
     "watch:main": "tsc --project tsconfig.main.json --watch --preserveWatchOutput",

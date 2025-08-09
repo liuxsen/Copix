@@ -1,12 +1,12 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, session } from 'electron'
 import { isDev } from './utils/constantUtil'
 import path from 'path'
+import os from 'os'
 import { getPreloadPath } from './utils/pathUtil'
 import { bootScreenShot } from './ipc/screenShot'
 
 app.on('ready', () => {
   bootScreenShot()
-  console.log("aaabb");
   const win = new BrowserWindow({
     webPreferences: {
       preload: getPreloadPath()
@@ -17,20 +17,15 @@ app.on('ready', () => {
   } else {
     win.loadFile(path.join(app.getAppPath(), 'dist-renderer', 'index.html'))
   }
-
-
-  // ipcMain.handle('event:invoke', (e, data) => {
-  //   console.log(data);
-  //   return {pong: true}
-  // })
-
-  // ipcMain.on('event:send',(e, data) => {
-  //   console.log(data);
-  // })
-
-  // // ipcMain.emit('event:on', {'event:on': 'from:main'})
-  // setTimeout(() => {
-  //   win.webContents.send('event:on', {'event:on': 'from:main'})
-  // }, 4000);
+  if(isDev()){
+    // 加载vue devtool插件；注意路径有可能自动升级版本，所以如果不生效，需要核对下本地路径
+    const vuePath = '/Library/Application\ Support/Google/Chrome/Default/Extensions/nhdogjmejiglipccpnnnanhbledajbpd/7.7.7_1'.split('/')
+    const vueDevToolsPath = path.join(
+      os.homedir(),
+      ...vuePath
+    )
+    console.log(vueDevToolsPath);
+    session.defaultSession.loadExtension(vueDevToolsPath)
+  }
 })
 

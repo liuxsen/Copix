@@ -9,6 +9,7 @@ export const getPreloadPath = () => {
     app.getAppPath(), 
     isDev() ? '.' : '..',
     'dist-electron',
+    'main',
     'preload',
     'index.js'
   )

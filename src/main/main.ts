@@ -1,11 +1,12 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { isDev } from './utils/constantUtil'
 import path from 'path'
 import { getPreloadPath } from './utils/pathUtil'
+import { bootScreenShot } from './ipc/screenShot'
 
 app.on('ready', () => {
-  console.log(getPreloadPath());
-  
+  bootScreenShot()
+  console.log("aaabb");
   const win = new BrowserWindow({
     webPreferences: {
       preload: getPreloadPath()
@@ -17,18 +18,19 @@ app.on('ready', () => {
     win.loadFile(path.join(app.getAppPath(), 'dist-renderer', 'index.html'))
   }
 
-  ipcMain.handle('event:invoke', (e, data) => {
-    console.log(data);
-    return {pong: true}
-  })
 
-  ipcMain.on('event:send',(e, data) => {
-    console.log(data);
-  })
+  // ipcMain.handle('event:invoke', (e, data) => {
+  //   console.log(data);
+  //   return {pong: true}
+  // })
 
-  // ipcMain.emit('event:on', {'event:on': 'from:main'})
-  setTimeout(() => {
-    win.webContents.send('event:on', {'event:on': 'from:main'})
-  }, 4000);
+  // ipcMain.on('event:send',(e, data) => {
+  //   console.log(data);
+  // })
+
+  // // ipcMain.emit('event:on', {'event:on': 'from:main'})
+  // setTimeout(() => {
+  //   win.webContents.send('event:on', {'event:on': 'from:main'})
+  // }, 4000);
 })
 

@@ -1,11 +1,10 @@
-async function init() {
-  const data = await window.electron.invoke('event:invoke', {event: 'event:invoke'})
-  console.log(data);
 
-  window.electron.send('event:send', {event: 'send'})
+import { createApp } from 'vue'
 
-  window.electron.on('event:on', (e: any, data: any) => {
-    console.log(data);
-  })
-}
-init()
+import App from './App.vue'
+const app = createApp(App)
+import 'virtual:uno.css'
+
+app.mount('#app')
+
+

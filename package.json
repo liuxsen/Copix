@@ -2,11 +2,12 @@
   "name": "copix",
   "version": "1.0.0",
   "description": "截屏、管理clipbord图片文件、文本",
-  "main": "dist-electron/main.js",
+  "main": "dist-electron/main/main.js",
   "scripts": {
-    "dev": "npm-run-all --parallel dev:renderer dev:main",
+    "dev": "npm-run-all --parallel dev:renderer watch:main dev:main",
     "dev:renderer": "vite",
-    "dev:main": "npm run build:main; cross-env NODE_ENV=development electron .",
+    "dev:main": "npm run build:main; cross-env NODE_ENV=development electron --inspect=9229 .",
+    "watch:main": "tsc --project tsconfig.main.json --watch --preserveWatchOutput",
     "build:main": "tsc --project tsconfig.main.json",
     "build:renderer": "tsc -b && vite build",
     "build": "npm run build:main && npm run build:renderer && electron-builder --mac --arm64",
@@ -25,11 +26,17 @@
   },
   "homepage": "https://github.com/liuxsen/Copix#readme",
   "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "cross-env": "^7.0.3",
     "electron": "^35.1.2",
-    "typescript": "~5.7.2",
-    "vite": "^7.1.1",
     "electron-builder": "^26.0.12",
     "npm-run-all": "^4.1.5",
-    "cross-env": "^7.0.3"
+    "typescript": "~5.7.2",
+    "unocss": "^66.4.2",
+    "vite": "6"
+  },
+  "dependencies": {
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1"
   }
 }

@@ -23,6 +23,9 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "src/renderder"
+    "src/renderder",
+    "src/renderer/**/*.vue",
+    "src/renderer/**/*.ts",
+    "src/share"
   ]
 }

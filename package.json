@@ -37,6 +37,7 @@
     "vite": "6"
   },
   "dependencies": {
+    "node-screenshots": "^0.2.1",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   }

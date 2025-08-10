@@ -7,6 +7,7 @@ import { winContainer } from './winContainer'
 
 app.on('ready', () => {
   bootScreenShot()
+  app.setAppUserModelId('top.copix');
   const win = winContainer.create('main', {})
   if(isDev()){
     win.loadURL('http://localhost:5123')

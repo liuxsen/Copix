@@ -1,3 +1,6 @@
 <template>
-  <div class="h-30" style="background-color: red;"> app </div>
+  <RouterView/>
 </template>
+
+<script lang="ts" setup>
+</script>

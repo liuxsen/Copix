@@ -1,20 +1,27 @@
 <template>
   <div class="box">
-    <button @click="onClose">关闭</button>
-    <canvas ref="canvasRef"/>
+    <AreaPick>
+      <Drawer/>
+    </AreaPick>
+    <ToolPane />
+    
   </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { IPC_CHANNELS } from '../../../share/channel';
+import AreaPick from './components/AreaPick.vue';
+import Drawer from './components/Drawer.vue';
+import ToolPane from './components/ToolPane.vue';
 
+// 开始截屏
 function onClose() {
   if(canvasRef.value){
     canvasRef.value.toBlob(async (blob) => {
       if (!blob) return
       const arrayBuffer = await blob.arrayBuffer()
-      window.electron.send(IPC_CHANNELS.SCREENSHOT.END_CAPTURE, { buffer: arrayBuffer })
+      window.electronApi.send(IPC_CHANNELS.SCREENSHOT.END_CAPTURE, { buffer: arrayBuffer })
     }, 'image/png')
   }
 }
@@ -51,16 +58,12 @@ async function renderBlob({display, imageBuffer}: TCAPTURE_DATA) {
 }
 
 onMounted(() => {
-  window.electron.on(IPC_CHANNELS.SCREENSHOT.GET_CAPTURE, (e, data: TCAPTURE_DATA) => {
-    debugger
-    console.log(e);
-    console.log("获取到当前屏幕的截图111");
-    console.log(data);
-    // renderImgUrl.value = data.imageBuffer
+  window.electronApi.on(IPC_CHANNELS.SCREENSHOT.GET_CAPTURE, (e, data: TCAPTURE_DATA) => {
     renderBlob(data)
   })
-  window.electron.send(IPC_CHANNELS.SCREENSHOT.READY_CAPTURE)
+  window.electronApi.send(IPC_CHANNELS.SCREENSHOT.READY_CAPTURE)
 })
+
 </script>
 
 <style>

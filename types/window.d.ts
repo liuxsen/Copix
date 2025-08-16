@@ -1,7 +1,6 @@
-export {}
 declare global {
   interface Window {
-    electron: {
+    electronApi: {
       /** 调用主进程的handle */
       invoke: (channel: string, data: any) => Promise<any>
       /** 给主进程发送消息 */
@@ -11,3 +10,4 @@ declare global {
     }
   }
 }
+export {}

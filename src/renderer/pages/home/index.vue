@@ -7,6 +7,6 @@
 import { IPC_CHANNELS } from '../../../share/channel';
 
 const onCapture = () => {
-  window.electron.send(IPC_CHANNELS.SCREENSHOT.START_CAPTURE)
+  window.electronApi.send(IPC_CHANNELS.SCREENSHOT.START_CAPTURE)
 }
 </script>

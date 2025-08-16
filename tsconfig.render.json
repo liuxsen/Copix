@@ -7,7 +7,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
     // 可以省略d.ts
-    "types": ["./types"],
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -23,9 +22,10 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
-    "src/renderder",
+    "src/renderer",
     "src/renderer/**/*.vue",
     "src/renderer/**/*.ts",
-    "src/share"
+    "src/share",
+    "types/*.d.ts"
   ]
 }

@@ -4,16 +4,15 @@ import path from 'path'
 import os from 'os'
 import { bootScreenShot } from './ipc/screenShot'
 import { winContainer } from './winContainer'
+import { bootShortCut } from './components/shortcut'
+import { bootMenu } from './components/menu'
 
 app.on('ready', () => {
+  bootShortCut()
   bootScreenShot()
   app.setAppUserModelId('top.copix');
-  const win = winContainer.create('main', {})
-  if(isDev()){
-    win.loadURL('http://localhost:5123')
-  } else {
-    win.loadFile(path.join(app.getAppPath(), 'dist-renderer', 'index.html'))
-  }
+  winContainer.create('main', '', {})
+  bootMenu()
   // 加载插件
   if(isDev()){
     // 加载vue devtool插件；注意路径有可能自动升级版本，所以如果不生效，需要核对下本地路径
@@ -32,7 +31,7 @@ app.on('ready', () => {
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      const win = winContainer.create('main', {})
+      const win = winContainer.create('main', '', {})
       if(isDev()){
         win.loadURL('http://localhost:5123')
       } else {

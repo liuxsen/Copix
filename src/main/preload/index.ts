@@ -5,7 +5,7 @@ import { contextBridge, ipcRenderer, type IpcRendererEvent } from 'electron';
 
 //  用Electron 的 contextBridge 安全地
 // 将部分 【IPC 方法】暴露到渲染进程的全局对象 【window.electron】 上，方便渲染进程调用主进程功能。
-contextBridge.exposeInMainWorld('electron', {
+contextBridge.exposeInMainWorld('electronApi', {
   nodeVersion: () => process.versions.node,
   chromeVersion: () => process.versions.chrome,
   electronVersion: () => process.versions.electron,

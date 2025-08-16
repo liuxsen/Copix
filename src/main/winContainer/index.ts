@@ -1,18 +1,20 @@
 // 定义一个窗口管理的容器
 
-import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
+import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import { getPreloadPath } from '../utils/pathUtil';
-
+import { isDev } from '../utils/constantUtil';
+import path from 'path'
 class WinContainer {
   private windows = new Map<string, BrowserWindow>()
-  create(id: string, options: BrowserWindowConstructorOptions){
+  create(id: string, hashPath = '', options: BrowserWindowConstructorOptions = {}){
     const win = new BrowserWindow({
       ...options,
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,
         preload: getPreloadPath(),
-        ...options.webPreferences
+        ...options.webPreferences,
+        devTools: true
       }
     })
     this.windows.set(id, win)
@@ -20,6 +22,13 @@ class WinContainer {
     win.on('closed', () => {
       this.windows.delete(id)
     })
+    if(isDev()){
+      win.loadURL(`http://localhost:5123/#${hashPath}`)
+    } else {
+      win.loadFile(path.join(app.getAppPath(), 'dist-renderer', 'index.html', `#${hashPath}`))
+    }
+    // 创建完window后，单开devtool
+    win.webContents.openDevTools()
     return win;
   }
 

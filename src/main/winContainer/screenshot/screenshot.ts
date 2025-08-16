@@ -46,8 +46,9 @@ export default class Screenshots extends Events {
   public async startCapture() {
     const display = getDisplay()
     console.log(display);
+    const imageBuffer = await this.capture(display)
     await this.createWindow(display)
-    const [imageBuffer] = await Promise.all([this.capture(display), this.isReady()]) 
+    await this.isReady()
     this.$view.webContents.send(IPC_CHANNELS.SCREENSHOT.GET_CAPTURE, {display, imageBuffer});
     return imageBuffer;
   }
@@ -75,8 +76,6 @@ export default class Screenshots extends Events {
    */
   public async createWindow(display: Display):Promise<void> {
     if (!this.$win || this.$win?.isDestroyed?.()) {
-      const isDevMode = isDev()
-      
       this.$win = new BaseWindow({
         title: 'screenshots',
         x: display.x,
@@ -117,6 +116,13 @@ export default class Screenshots extends Events {
     }
   }
 
+  private close() {
+    if(this.$win && !this.$win.isDestroyed()){
+      this.$win?.close()
+      this.$win = null
+    }
+  }
+
   /**
    * listIPC
    */
@@ -127,7 +133,10 @@ export default class Screenshots extends Events {
       clipboard.writeImage(nativeImage.createFromBuffer(buffer))
       const filePath = path.join(app.getPath('pictures'), `screenshot-${Date.now()}.png`)
       fs.writeFileSync(filePath, buffer)
-      console.log('截图已保存到', filePath)
+      this.close()
+    })
+    ipcMain.on(IPC_CHANNELS.SCREENSHOT.CANCEL_CAPTURE, () => {
+      this.close()
     })
   }
 }

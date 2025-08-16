@@ -4,16 +4,14 @@ import { winContainer } from '../winContainer';
 import Screenshots from '../winContainer/screenshot/screenshot';
 
 export const bootScreenShot = () => {
-  console.log(IPC_CHANNELS.SCREENSHOT.PIN);
   
   ipcMain.on(IPC_CHANNELS.SCREENSHOT.PIN, (_e: any, data) => {
     console.log(data);
   })
-  console.log(IPC_CHANNELS.SCREENSHOT.PIN);
   
   ipcMain.handle(IPC_CHANNELS.SCREENSHOT.PIN, (_e, data) => {
     console.log('handle', data);
-    winContainer.create(data.id, {})
+    winContainer.create(data.id, '', {})
     return {}
   })
 
